@@ -3,6 +3,7 @@ package za.co.dinoko.planet;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,10 +18,10 @@ public class Edge implements Serializable {
 
     @Id
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "origin", referencedColumnName = "name")
     private Planet origin;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "destination", referencedColumnName = "name")
     private Planet destination;
     private BigDecimal distance;

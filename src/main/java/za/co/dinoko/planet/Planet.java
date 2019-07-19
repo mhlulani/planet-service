@@ -29,18 +29,18 @@ public class Planet implements Serializable {
     private List<Planet> shortestPath;
 
     public Planet() {
+        this(null);
+    }
 
+    public Planet(String name) {
+        this.name = name;
+        this.distance = Interstellar.INFINITY;
+        this.shortestPath = new LinkedList<>();
+        this.adjacentPlanets = new HashMap<>();
     }
 
     public void addDestination(Planet destination, BigDecimal distance) {
         adjacentPlanets.put(destination, distance);
-    }
-
-    public Planet(String name, BigDecimal distance) {
-        this.name = name;
-        this.distance = distance;
-        this.shortestPath = new LinkedList<>();
-        this.adjacentPlanets = new HashMap<>();
     }
 
     public void setName(String name) {

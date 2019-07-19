@@ -1,7 +1,6 @@
 package za.co.dinoko.planet.rest;
 
 import java.util.List;
-import jdk.internal.jline.internal.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.dinoko.planet.Edge;
 import za.co.dinoko.planet.Planet;
 import za.co.dinoko.planet.service.InterstellarService;
 
+// TODO: API Input Validation needs improvement
 @RestController
 @RequestMapping("/planets")
 public class PlanetController {
@@ -29,33 +28,27 @@ public class PlanetController {
         return service.findAll();
     }
 
-    @GetMapping(value = "_graph")
-    public List<Edge> findGraph() {
-        return service.fetchGraph();
-    }
-
-    @GetMapping(value = "/{id}")
-    public Planet findById(@PathVariable("id") Long id) {
-        return service.findById(id);
+    @GetMapping(value = "/{name}")
+    public Planet findById(@PathVariable("name") String name) {
+        return service.findById(name);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody Planet resource) {
-        Preconditions.checkNotNull(resource);
+    public String create(@RequestBody Planet resource) {
         return service.create(resource);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") Long id, @RequestBody Planet resource) {
-        Preconditions.checkNotNull(resource);
+    public void update(@PathVariable("name") String name, @RequestBody Planet resource) {
+
         service.update(resource);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
-        service.deleteById(id);
+    public void delete(@PathVariable("name") String name) {
+        service.deleteById(name);
     }
 }
